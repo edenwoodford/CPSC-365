@@ -1,0 +1,4 @@
+cd CPSC-365
+git add . 
+git commit -m "initial php"
+git push -u origin main
