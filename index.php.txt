@@ -1,20 +1,17 @@
-<html> 
-<head>
-<title> My Page </title>
-</head>
-<body> 
-<h1> This is my page </h1>
 <?php
-
-var_dump($_POST);
-
+$title = "My Page";
+require 'header.php';
+ ?>
+ 
+ <h1> My web page </h1>
+<?php
+	require_once 'util.php';
+	$x =10;
+	$y =20;
+	
+	
+	
 ?>
 
-
-<form method= "POST">
-<input type= "text" name="userid"> <br>
-<input type="password" name= "password"> <br>
-<input type= "submit" value="Login">
-</form>
- </body>
+</body>
 </html>
