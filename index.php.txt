@@ -1,17 +1,18 @@
-<?php
-$title = "My Page";
-require 'header.php';
- ?>
- 
- <h1> My web page </h1>
-<?php
-	require_once 'util.php';
-	$x =10;
-	$y =20;
-	
-	
-	
-?>
-
+<html>  
+<head> 
+<title> User Authentication </title> 
+</head> 
+<body>  
+<h1> User Registration </h1> 
+<form action="doform.php" method="POST">
+<input type="hidden" name="hiddenvalue" value="foo">
+Username: <input type="text" name="username"><br>
+Password: <input type="password" name= "password"> <br> 
+<input type="submit" value="Submit">
+</form>
+Already have an account? 
+<form action="userlogin.php" method="post">
+<input type="submit" value="Login">
+</form>
 </body>
 </html>
