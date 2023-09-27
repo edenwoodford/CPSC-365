@@ -10,8 +10,11 @@
         <input type="submit" value="Submit">
     </form>
 Are you a new user? 
-<form action="index.php.txt" method="post">
+<form action="register.php" method="post">
 <input type="submit" value="Register">
+</form>
+<form action="index.php" method="post">
+<input type="submit" value="Contiue as Guest">
 </form>
 </body>
 </html>

@@ -19,7 +19,7 @@ if (!$user) {
 		session_regenerate_id(true);
 		$_SESSION['user_id'] = $user['user_id']; 
 			echo 'Login Successful';
-			header("Location: mainpage.php");
+			header("Location: index.php");
 			exit();
 		
 	} else {

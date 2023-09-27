@@ -14,5 +14,8 @@ Already have an account?
 <form action="userlogin.php" method="post">
 <input type="submit" value="Login">
 </form>
+<form action="index.php" method="post">
+<input type="submit" value="Continue as Guest">
+</form>
 </body>
 </html>
