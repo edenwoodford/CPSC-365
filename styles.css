@@ -1,0 +1,22 @@
+body {
+  background-color: paleturquoise;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+form {
+  background-color: white;
+  padding: 20px;
+}
+input[type="text"],
+input[type="password"] {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 4px;
+}
+input[type="submit"] {
+  background-color: teal;
+  color: white;
+  padding: 10px;
+  width: 100%;
+}
