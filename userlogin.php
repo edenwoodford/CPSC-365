@@ -13,12 +13,15 @@
         Password: <input type="password" name="password"><br>
         <input type="submit" value="Submit">
     </form>
+	
+	
+	
 Are you a new user? 
 <form action="register.php" method="post">
 	<input type="submit" value="Register">
 	</form>
 <form action="index.php" method="post">
-	<input type="submit" value="Contiue as Guest">
+	<input type="submit" value="Continue as Guest">
 	</form>
 </div>
 </body>
