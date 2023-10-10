@@ -1,3 +1,7 @@
+<?php
+session_start();
+require ('header.php');
+?>
 <html>  
 <head> 
 <title> Dashboard </title> 
@@ -9,7 +13,12 @@ body {
 }
 </style>
 <?php
-    session_start();
+	if(isset($_SESSION['admin']) && $_SESSION['admin']) {
+		//user is an admin
+	echo '<form action= "admin.php" method= "POST">';
+	echo '<input type= "submit" value="Go to Admin Page">';
+	echo '</form>';
+	}
     if (isset($_SESSION['user_id'])) {
         //User is logged in
         echo '<form action="logout.php" method="POST">';
@@ -24,6 +33,7 @@ body {
         echo '<input type="submit" value="Login">';
         echo '</form>';
     }
+	require ('footer.php');
     ?>
 </html>
 

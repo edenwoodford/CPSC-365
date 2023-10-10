@@ -18,7 +18,6 @@ if ($row) {
    echo ('<br>'.'This username already exists');
 }
 else {
-//$row = $stmt->fetch(PDO::FETCH_ASSOC); when is this necessary? 
 $sql = 'INSERT INTO Users (username, password) VALUES (:username, :password)'; 
 $stmt = $pdo->prepare ($sql); 
 $username= $_POST['username']; 
