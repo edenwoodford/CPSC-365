@@ -23,14 +23,16 @@ body {
 </style>
 Add a new movie here! <br>
 Note: all fields are required except actor names and extra genres <br> <br> 
-<form action="doadmin.php" method= "POST">
+<form action="doadmin.php" method= "POST" enctype="multipart/form-data">
 <label for="title">Movie Title:<br></label>
 <input type="text" name="title" required><br>    
 <label for="description">Description:<br></label>
 <textarea name="description" required></textarea><br>        
 <label for="year">Release Year:<br></label>
 <input type="text" name="year" required><br>
-<label for="genre1">Genre 1:<br></label>
+ <br> Movie Poster: <br>
+<input type="file" name="upload">
+<label for="genre1"><br>Genre 1:<br></label>
 <select name="genre1" required>
     <option value="N/A">N/A</option>
     <option value="Action">Action</option>

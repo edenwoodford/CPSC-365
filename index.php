@@ -35,5 +35,16 @@ body {
     }
 	require ('footer.php');
     ?>
+	
+<?php
+$movie_id = 6;
+$file_path = "uploads/{$movie_id}.jpeg";
+
+if (file_exists($file_path)) {
+    echo "<img src='{$file_path}' alt='Movie Poster' />";
+} else {
+    echo "<p>No poster available for this movie.</p>";
+}
+?>
 </html>
 

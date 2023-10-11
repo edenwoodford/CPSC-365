@@ -19,6 +19,9 @@ Already have an account?
 </form>
 <form action="index.php" method="post">
 	<input type="submit" value="Continue as Guest">
+	</form>
+	<form action="pictures.php" method="post">
+	<input type="submit" value="Practice pictures">
 </form>
 </div>
 </body>

@@ -3,7 +3,7 @@
 session_start();
 REQUIRE 'dbconnect.php';
 dbConnect();
-$errormessage = '';
+
 //check for repeat movies (based on matching title and year)
 $stmt = $pdo->prepare("SELECT * FROM Movies WHERE title = :title AND year = :year");
 $stmt->bindParam(':title', $_POST['title']);
@@ -12,24 +12,53 @@ $stmt->execute();
 $checkMovies= $stmt->fetch();
 
 if ($checkMovies) {
-    $errormessage= 'Movie already exists';
+    echo 'Movie already existas';
 	header("Location: admin.php");
 	exit();
 }
 
 else {
-	$addMovie = 'INSERT INTO Movies (title, description, year, director) VALUES (:title, :description, :year, :director)';
+	$addMovie = 'INSERT INTO Movies (title, description, year, director, upload) VALUES (:title, :description, :year, :director, :upload)';
 	$stmt = $pdo->prepare($addMovie);
 	$title = $_POST['title'];
 	$description = $_POST['description'];
 	$year= $_POST['year'];
 	$director = $_POST['director'];
+	$upload = $_POST['upload'];
     $stmt->bindParam(':title', $title);
     $stmt->bindParam(':description', $description );
     $stmt->bindParam(':year', $year);
     $stmt->bindParam(':director',$director);
+	$stmt->bindParam(':upload', $upload);
     $stmt->execute();
     $movie_id = $pdo->lastInsertId();
+
+if (isset($_FILES['upload'])) {
+	//var_dump($_FILES['upload']);
+	//we are using movie_id to name the images
+	if ($_FILES ['upload']['error']  != UPLOAD_ERR_OK)
+	{
+		echo 'error uploading file';
+		exit();
+	}
+	$finfo = new finfo (FILEINFO_MIME_TYPE);
+	$ftype = $finfo->file ($_FILES['upload']['tmp_name']);
+	if ($ftype != "image/jpeg")
+	{
+			echo 'error invalid file type';
+			exit();
+	}else {
+        $upload_dir = 'uploads/';
+        $uploaded_file = $upload_dir . $movie_id . '.jpeg';
+        if (move_uploaded_file($_FILES['upload']['tmp_name'], $uploaded_file)) {
+            echo 'File uploaded successfully';
+        } else {
+            echo 'Error moving uploaded file';
+            exit();
+        }
+    }
+}
+
 //loop handling a max of 3 genres
 //make sure to check for empty
 for ($i = 1; $i <= 4; $i++) {
@@ -68,7 +97,6 @@ if($actor_id == 0) {
      $stmt->execute();
     }
 }
-
 echo 'movie added';
 header("Location: index.php");
 }
