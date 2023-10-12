@@ -1,9 +1,7 @@
 <html>
 <head>
 <title>Returning User </title>
-<head>
 <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
 </head>
 <body>
 <div>
@@ -23,6 +21,6 @@ Are you a new user?
 <form action="index.php" method="post">
 	<input type="submit" value="Continue as Guest">
 	</form>
-</div>
+</div> 
 </body>
 </html>
