@@ -13,14 +13,9 @@ if (!isset($_SESSION['admin'])) {
 ?>
 <html>  
 <head> 
-<title> Dashboard </title> 
+<title> Administrator Page</title> 
 </head> 
 <h1> Administrator Page</h1> 
-<style>
-body {
-	background-color: paleturquoise;
-}
-</style>
 Add a new movie here! <br>
 Note: all fields are required except actor names and extra genres <br> <br> 
 <form action="doadmin.php" method= "POST" enctype="multipart/form-data">
@@ -48,7 +43,7 @@ Note: all fields are required except actor names and extra genres <br> <br>
     <option value="11">Documentary</option>
 </select><br>
 <label for="genre2">Genre 2:<br></label>
-<select name="genre2" required>
+<select name="genre2">
 	<option value="N/A">N/A</option>
     <option value="1">Action</option>
     <option value="2">Comedy</option>
@@ -63,7 +58,7 @@ Note: all fields are required except actor names and extra genres <br> <br>
     <option value="11">Documentary</option>
 </select><br>
 <label for="genre3">Genre 3:<br></label>
-<select name="genre3" required>
+<select name="genre3" >
   <option value="N/A">N/A</option>
     <option value="1">Action</option>
     <option value="2">Comedy</option>

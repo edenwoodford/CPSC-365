@@ -13,8 +13,9 @@
     </form>
 	
 	
-	
+	<br>
 Are you a new user? 
+<br>
 <form action="register.php" method="post">
 	<input type="submit" value="Register">
 	</form>

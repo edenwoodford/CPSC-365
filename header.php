@@ -1,10 +1,13 @@
 
 <html>
+<head>  <link rel="stylesheet" href="styles.css"></head>
 <body>
-<form action="index.php" method="post">
-<input type="submit" value="Go home">
-</form>
+<div class= "header">
+
 <?php
+	echo '<form action="index.php" method="post">';
+	echo '<input type="submit" value="Go home">';
+	echo '</form>';
 	if(isset($_SESSION['admin']) && $_SESSION['admin']) {
 		//user is logged in and an admin
 	echo '<form action= "admin.php" method= "POST">';
@@ -26,5 +29,6 @@
         echo '</form>';
     }
 ?>
+</div>
 </body>
 </html>

@@ -3,20 +3,27 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;  /* Add this line to stack contents vertically */
 }
+
 form {
   background-color: white;
   padding: 20px;
+  display: inline-block;  /* Add this line to display forms side by side */
 }
+
 input[type="text"],
 input[type="password"] {
   padding: 10px;
   margin: 10px;
   border-radius: 4px;
 }
+
 input[type="submit"] {
   background-color: teal;
   color: white;
   padding: 10px;
+  border: none;   
+  cursor: pointer;
   width: 100%;
 }

@@ -12,8 +12,9 @@ Username: <input type="text" name="username"><br>
 Password: <input type="password" name= "password"> <br> 
 		  <input type="submit" value="Submit">
 </form>
-
+<br>
 Already have an account? 
+<br>
 <form action="userlogin.php" method="post">
 	<input type="submit" value="Login">
 </form>

@@ -10,13 +10,12 @@ $stmt->bindParam(':title', $_POST['title']);
 $stmt->bindParam(':year', $_POST['year']);
 $stmt->execute();
 $checkMovies= $stmt->fetch();
-
+$movie_id = 0;
 if ($checkMovies) {
     echo 'Movie already existas';
 	header("Location: admin.php");
 	exit();
 }
-
 else {
 	$addMovie = 'INSERT INTO Movies (title, description, year, director) VALUES (:title, :description, :year, :director)';
 	$stmt = $pdo->prepare($addMovie);
@@ -24,12 +23,10 @@ else {
 	$description = $_POST['description'];
 	$year= $_POST['year'];
 	$director = $_POST['director'];
-	//$upload = $_POST['upload'];
     $stmt->bindParam(':title', $title);
     $stmt->bindParam(':description', $description );
     $stmt->bindParam(':year', $year);
     $stmt->bindParam(':director',$director);
-	//$stmt->bindParam(':upload', $upload);
     $stmt->execute();
     $movie_id = $pdo->lastInsertId();
 
@@ -110,6 +107,11 @@ if($actor_id == 0) {
      $stmt->execute();
     }
 }
+
+$addDate = "UPDATE Movies SET dateAdded=NOW() WHERE movie_id = :movie_id";
+$stmt = $pdo->prepare($addDate);
+$stmt->bindParam(':movie_id', $movie_id);
+$stmt->execute();
 echo 'movie added';
 header("Location: index.php");
 }
