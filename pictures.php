@@ -11,7 +11,7 @@ user uploads, a movie poster 750 pixels wide by 1000 pixels high
 <?php
 if (isset($_POST['upload'])) {
 	//var_dump($_FILES['upload']);
-	//we are using movie_id to name the images
+	//we are using movie_id to name the images --> use LastInsertID again!!!!!
 	if ($_FILES ['upload']['error']  != UPLOAD_ERR_OK)
 	{
 		echo 'error uploading file';
@@ -24,6 +24,7 @@ if (isset($_POST['upload'])) {
 			echo 'error invalid file type';
 			exit();
 	}
+	//additions as of 10/13/2023
 	$image = imagecreatefromjpeg ($filename);
 	$width = imagesx ($image);
 	$height = imagesy ($image);

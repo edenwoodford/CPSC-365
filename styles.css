@@ -3,13 +3,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;  /* Add this line to stack contents vertically */
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
 }
 
 form {
   background-color: white;
   padding: 20px;
-  display: inline-block;  /* Add this line to display forms side by side */
+  display: inline-block;
 }
 
 input[type="text"],
@@ -27,3 +29,5 @@ input[type="submit"] {
   cursor: pointer;
   width: 100%;
 }
+
+

@@ -2,7 +2,6 @@
 session_start();
 REQUIRE 'dbconnect.php';
 dbConnect();
-
 $username = $_POST["username"];
 $password = $_POST["password"];
 $checkUsername = "SELECT * FROM Users WHERE username = :username";
@@ -13,7 +12,8 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 //??
 if (!$user) {
      echo 'User is not found';
-} else {
+} 
+else {
 	$storedPassword = $user['password'];
 	if (password_verify($password, $storedPassword)) {
 		session_regenerate_id(true);

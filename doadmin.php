@@ -62,7 +62,7 @@ if (isset($_FILES['upload'])) {
 	
 	$thumbnail = imagecreatetruecolor ($targetWidth, $targetHeight);
 	imagecopyresampled ($thumbnail, $image, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
-	imagejpeg ($thumbnail, "movieposter.jpg");
+	imagejpeg ($thumbnail, $upload_dir . $movie_id . "_thumb.jpeg");
     }
 }
 
@@ -94,7 +94,7 @@ for ($i = 1; $i <= 3; $i++) {
      $stmt->execute();
      $actor_id = $pdo->lastInsertId();
 if($actor_id == 0) {
-	 $addNewActors = "SELECT actor_id FROM Actors WHERE name = :name";
+	 $addNewActor = "SELECT actor_id FROM Actors WHERE name = :name";
      $stmt = $pdo->prepare($addNewActor);
      $stmt->bindParam(':name', $_POST['actor' . $i]);
      $stmt->execute();
