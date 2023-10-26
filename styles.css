@@ -29,5 +29,24 @@ input[type="submit"] {
   cursor: pointer;
   width: 100%;
 }
+.header img {
+  width: 100px;
+  height: 100px;
+}
+.header {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #E4FFFF;
+}
+input[type="submit"].nostyle {
+  all: unset;
+  cursor: pointer;
+}
+
+
+
 
 

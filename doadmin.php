@@ -62,22 +62,23 @@ if (isset($_FILES['upload'])) {
 	
 	$thumbnail = imagecreatetruecolor ($targetWidth, $targetHeight);
 	imagecopyresampled ($thumbnail, $image, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
-	imagejpeg ($thumbnail, $upload_dir . $movie_id . "_thumb.jpeg");
+	$thumbName = $upload_dir . $movie_id . "_thumb.jpeg";
+	imagejpeg ($thumbnail, $thumbName);
     }
 }
 
 //loop handling a max of 3 genres
 //make sure to check for empty
 for ($i = 1; $i <= 3; $i++) {
-    if (isset($_POST['genre' . $i]) && $_POST['genre' . $i] > 0) {
-        $genre_id = $_POST['genre' . $i];
-        $addGenre = 'SELECT * FROM Genres WHERE genre_id = :genre_id';
-        $stmt = $pdo->prepare($addGenre);
+    $genre_id = $_POST['genre' . $i];
+    if (!empty($genre_id) && $genre_id !== "N/A") {
+        $checkLink = "SELECT * FROM MovieGenres WHERE movie_id = :movie_id AND genre_id = :genre_id";
+        $stmt = $pdo->prepare($checkLink);
+        $stmt->bindParam(':movie_id', $movie_id);
         $stmt->bindParam(':genre_id', $genre_id);
         $stmt->execute();
-        $genreExists = $stmt->fetch();
-        if ($genreExists) {
-			$linkToMovie = "INSERT INTO MovieGenres (movie_id, genre_id) VALUES (:movie_id, :genre_id)";
+        if (!$stmt->fetch()) {
+            $linkToMovie = "INSERT INTO MovieGenres (movie_id, genre_id) VALUES (:movie_id, :genre_id)";
             $stmt = $pdo->prepare($linkToMovie);
             $stmt->bindParam(':movie_id', $movie_id);
             $stmt->bindParam(':genre_id', $genre_id);
@@ -85,6 +86,8 @@ for ($i = 1; $i <= 3; $i++) {
         }
     }
 }
+
+
 //for loop handling up to 3 actors
 for ($i = 1; $i <= 3; $i++) {
   if (!empty($_POST['actor' . $i])) {

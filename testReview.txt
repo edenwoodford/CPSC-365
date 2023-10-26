@@ -1,0 +1,110 @@
+Review day Mon. Oct. 23
+
+BNF - writing a grammar for a programming construct
+
+terminals - code you have to write (for, in, range, : , x, y, 1, 2, 3)
+nonterminals - code surrounded by <> (<for_loop>, <var>)
+
+identifier - the name the programmer chooses
+
+<variable_declaration>, <identifier>
+<method> and <generic_name> (w/o defining them)    
+
+ex <T>
+public interface List <E> {
+	int x;
+	void add(E data);
+
+}
+<interface> -> <access> interface <identfier> <generic_name> {<methods_and_variables>} |
+interface <identifier><generic_name> {
+<methods_and_variables>} | interface <identifier> {<methods_and_variables>} |
+<access> interface{<methods_and_variables>}
+
+<access> -> public|protected|private
+<methods_and_variables> -> <method>; |<variable>; | <methods_and_variables> <method_and_variables>
+
+public interface List <E> {
+	int x;
+	void add(E data);
+}	
+another example
+<integer> -> <zero> | <digit> | -<digit> |
+<digit><zero_or_digit> | -<digit><zero_or_digit> 
+<zero_or_digit> -> <zero> | <digit> | <digit><zero_or_digit> | <zero><zero_or_digit>
+<digit> -> 1|2|3|4|5|6|7|8|9
+<zero> -> 0
+EBNF
+use these: 
+[] 0 or 1
+{} 0 or more
+x|y alternative terminals     ex.  <expr> -> <term> (+|-) (const|<term>)
+example
+<expr> -> expr> + <term>| <expr> - <term> | <term>
+<term> -> <term> * <factor> |<term> / <factor> |<factor>
+reduce to
+<expr> -> {<expr> (+|-)} <term>
+<term> -> {<term> (+|-)} <factor> 
+
+<value> -> 1|2|3
+<list> -> <value> | <value>, <list>
+<multilist> -> <value> | <list>, <multilist>
+<matrix> -> $<multilist> $<multilist>
+
+<value> -> (1|2|3)
+<list> -> <value> [,<list>]
+<multilist> -> <list> {,<multilist>}
+<matrix>-> $<multilist> $<multilist>
+
+Chomsky - derivations                      
+rules:
+-terminals are lowercase
+-nonterminals are uppercase
+S -> a |Sa | B
+B -> bB | b | E (epsillon) 
+
+Python [List processing]
+
+JavaScript Recursion on lists
+const fib = (n) => {
+n==0 ? "Error"
+n==1 ? 1
+:n+fib(n-1);
+return z;
+}
+
+const fib = (n) => {
+n==0? 1
+:n==1? 1
+:fib(n-1) + fib(n-2);
+return z;
+}
+
+JavaScript conditionals
+
+JavaScript Lambda expressions
+
+const numberArray = [2,18,4,11,12,5,8,17,7,3,5,1,6,9,4];
+const filterby3 = numberArray.filter(x=> x%3==0);
+document.write("result: " + filterby3);
+		
+result: 18,12,3,6,9
+		
+Higher order functions (map and filter)
+
+const evenFunction = (num) =>num % 2 ==0;
+myList = [1,2,3,5,6,7,10]
+evenVals = myList.filter(evenFunction);
+document.write("even values: " + evenVals)
+//filter removes some values from a list
+//filter makes its own list from the function that it is given
+
+even values: 2,6,10
+
+const doubleIt = (x) => x+x;
+const numbers = [4,9,16,25];
+const newArr = numbers.map(doubleIt);
+document.write("result " + newArr);
+//map creates new values within a list
+
+result 8,18,32,50

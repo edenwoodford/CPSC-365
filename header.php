@@ -4,12 +4,17 @@
 </head>
 <body>
 <div class="header">
+
     <?php
+	//"C:\Users\edenw\OneDrive\Desktop\UniServerZ\www\images\film&friends.png"
+	    $imageName = "film&friends.png";
+	    $imagePath = "uploads/" . $imageName;
+		echo "<img src='" . $imagePath . "'>";
         echo '<form action="index.php" method="post">';
         echo '<input type="submit" value="Go Home">';
         echo '</form>';
 
-        if(isset($_SESSION['admin']) && $_SESSION['admin']) {
+        if(isset($_SESSION['admin'])) {
             echo '<form action="admin.php" method="POST">';
             echo '<input type="submit" value="Admin Page">';
             echo '</form>';
@@ -19,7 +24,8 @@
             echo '<form action="logout.php" method="POST">';
             echo '<input type="submit" value="Logout">';
             echo '</form>';
-        } else {
+        } 
+		else {
             echo '<form action="register.php" method="post">';
             echo '<input type="submit" value="Register">';
             echo '</form>';
@@ -27,5 +33,6 @@
             echo '<input type="submit" value="Login">';
             echo '</form>';
         }
+		
     ?>
 </div>
