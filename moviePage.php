@@ -1,21 +1,6 @@
 <html><head>
 <title> Movie Page </title>
-   <style>
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .comments, .ratings {
-            flex: 1;
-        }
-        .comments {
-            max-width: 50%;
-        }
-        .ratings {
-            max-width: 50%;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 	</head>
 	<body>
 
@@ -42,7 +27,7 @@ if (isset($_GET['movie_id'])) {
 	$stmt =$pdo->prepare($movieActors);
 	$stmt -> bindParam(':movie_id', $movie_id);
 	$stmt -> execute();
-	$actor = $stmt-> fetch();
+	$actors = $stmt-> fetchAll();
 	if ($findMovie) {
         echo "<h2>{$findMovie['title']}</h2>";
 		$movie_id = $findMovie['movie_id'];
@@ -56,10 +41,13 @@ if (isset($_GET['movie_id'])) {
 		foreach ($genres as $genre) {
 		echo " ";
 	    echo "{$genre['genre']}";
+		echo ", ";
 		}
 		echo "</p>";
 		echo "Actor(s): ";
+		foreach ($actors as $actor) {
 		echo "{$actor['name']}, ";
+		}
         echo "<p>Directed by: {$findMovie['director']}</p>";
         echo '</div>';
 		}
@@ -89,7 +77,8 @@ if (isset($_GET['movie_id'])) {
     echo "<p>{$comment['username']}: ";
     echo htmlentities($comment['comment'], ENT_QUOTES) . " ";
 	echo "(posted on {$comment['date']})</p>";
-    if ($_SESSION['user_id'] != $comment['user_id']) {
+	if (isset($_SESSION ['user_id'])){
+    if (($_SESSION['user_id'] != $comment['user_id']))  {
 	?>
 	<form action="addFriend.php" method="post">
 	<input type="submit" value="Add Friend" class="nostyle">
@@ -97,6 +86,7 @@ if (isset($_GET['movie_id'])) {
 	<?php
     }
     }
+	}
 //ex: echo '<b> Latest Comment: </b>''.htmlentities($_POST['comment'],ENT_QUOTES).'<br>;
     if (isset($_SESSION['user_id'])) {
         echo '<form action="" method="post">';
@@ -116,7 +106,7 @@ if (isset($_GET['movie_id'])) {
 	$stmt -> bindParam(':user_id', $user_id);
     $stmt->execute();
     $prevRating = $stmt->fetchColumn();
-    if ($prevRating != false) {
+    if ($prevRating) {
         echo "<p>Your rating: $prevRating</p>";
     } else {
 ?>

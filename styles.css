@@ -45,7 +45,20 @@ input[type="submit"].nostyle {
   all: unset;
   cursor: pointer;
 }
-
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .comments, .ratings {
+            flex: 1;
+        }
+        .comments {
+            max-width: 50%;
+        }
+        .ratings {
+            max-width: 50%;
+        }
 
 
 
