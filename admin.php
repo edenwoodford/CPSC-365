@@ -1,3 +1,4 @@
+    <link rel="stylesheet" href="formatStyles.css">
 <?php
 session_start();
 REQUIRE 'dbconnect.php';
@@ -94,19 +95,29 @@ Note: all fields are required except actor names and extra genres <br> <br>
   <option value="18">Family</option>
 </select><br>
 <label for="director">Director:<br></label>
-<input type="text" name="director" required><br>        
-<label for="actor1">Actor 1:</label>
-<input type="text" name="actor1"><br>        
-<label for="actor2">Actor 2:</label>
-<input type="text" name="actor2"><br>       
-<label for="actor3">Actor 3:</label>
-<input type="text" name="actor3"><br>        
+<input type="text" name="director" required><br> 
+<input type="button" id="addActorB" value="Add Actor">
+<p id="addActor"> <input type ="text" name="actor[]"> </p>
+     
 <input type="submit" value= "Add Movie"> <br> 
 </form>
+<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="adminJs.js"></script>
 </body>
+<form action="deleteMovie.php" method ='POST'>
+<h2>Delete Movie</h2>
+<label for="title"> Movie Title: <br></label>
+<input type="text" name="title" required><br>
+<input type='submit' value= 'Delete Movie'>
+</form>
+<form action="deleteComment.php" method ="POST">
+<h2>Delete Comment</h2> <br>
+Fill in The Following Information: <br><br>
+<label for = "title"> Movie Title <br> </label>
+<input type ="text" name= "title" required><br>
+<label for "username"> Username <br> </label>
+<input type ="text" name ="username" required> <br> 
+<input type ="submit" value ="Find Comments ">
+</form>
 </html>
-
-
-
-
 

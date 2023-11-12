@@ -6,14 +6,17 @@
 <div class="header">
 
     <?php
-	//"C:\Users\edenw\OneDrive\Desktop\UniServerZ\www\images\film&friends.png"
+	//file path "C:\Users\edenw\OneDrive\Desktop\UniServerZ\www\images\film&friends.png"
 	    $imageName = "film&friends.png";
 	    $imagePath = "uploads/" . $imageName;
 		echo "<img src='" . $imagePath . "'>";
         echo '<form action="index.php" method="post">';
         echo '<input type="submit" value="Go Home">';
         echo '</form>';
-
+		echo '<form action="searchPage.php" method="get">';
+		echo '<input name ="title" type= "text" placeholder= "type here">';
+		echo '<input type="submit" value="Search">';
+		echo '</form>';
         if(isset($_SESSION['admin'])) {
             echo '<form action="admin.php" method="POST">';
             echo '<input type="submit" value="Admin Page">';
@@ -32,7 +35,6 @@
             echo '<form action="userlogin.php" method="post">';
             echo '<input type="submit" value="Login">';
             echo '</form>';
-        }
-		
+        }	
     ?>
 </div>

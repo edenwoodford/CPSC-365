@@ -86,30 +86,31 @@ for ($i = 1; $i <= 3; $i++) {
         }
     }
 }
-
-
-//for loop handling up to 3 actors
-for ($i = 1; $i <= 3; $i++) {
-  if (!empty($_POST['actor' . $i])) {
-     $addActor = 'INSERT IGNORE INTO Actors (name) VALUES (:name)';
-     $stmt = $pdo->prepare($addActor);
-     $stmt->bindParam(':name', $_POST['actor' . $i]);
-     $stmt->execute();
-     $actor_id = $pdo->lastInsertId();
-if($actor_id == 0) {
-	 $addNewActor = "SELECT actor_id FROM Actors WHERE name = :name";
-     $stmt = $pdo->prepare($addNewActor);
-     $stmt->bindParam(':name', $_POST['actor' . $i]);
-     $stmt->execute();
-     $actor_id = $stmt->fetch()['actor_id'];
-}
-	$sharedMovies = "INSERT INTO SharedMovies (movie_id, actor_id) VALUES (:movie_id, :actor_id)";
-     $stmt = $pdo->prepare($sharedMovies);
-     $stmt->bindParam(':movie_id', $movie_id);
-     $stmt->bindParam(':actor_id', $actor_id);
-     $stmt->execute();
-    }
-}
+if (isset($_POST['actor'])) {
+    foreach ($_POST['actor'] as $actorName) {
+        if (!empty($actorName)) {
+            $addActor = 'SELECT * FROM Actors WHERE name = :name';
+            $stmt = $pdo->prepare($addActor);
+            $stmt->bindParam(':name', $actorName);
+            $stmt->execute();
+            $actor = $stmt->fetch();
+            
+            if ($actor) {
+                $actor_id = $actor['actor_id'];
+            } else {
+                $newActor = 'INSERT INTO Actors (name) VALUES (:name)';
+                $stmt = $pdo->prepare($newActor);
+                $stmt->bindParam(':name', $actorName);
+                $stmt->execute();
+                $actor_id = $pdo->lastInsertId();
+            }
+            
+            $addActorToMovie = 'INSERT INTO SharedMovies (movie_id, actor_id) VALUES (:movie_id, :actor_id)';
+            $stmt = $pdo->prepare($addActorToMovie);
+            $stmt->bindParam(':movie_id', $movie_id);
+            $stmt->bindParam(':actor_id', $actor_id);
+            $stmt->execute();
+        }}}
 
 $addDate = "UPDATE Movies SET dateAdded=NOW() WHERE movie_id = :movie_id";
 $stmt = $pdo->prepare($addDate);

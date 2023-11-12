@@ -8,7 +8,7 @@ $checkUsername = "SELECT * FROM Users WHERE username = :username";
 $stmt = $pdo->prepare($checkUsername);
 $stmt->bindParam(':username', $username);
 $stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC); 
+$user = $stmt->fetch(); 
 //??
 if (!$user) {
      echo 'User is not found';
@@ -26,6 +26,7 @@ else {
 		
 	} else {
       echo 'Incorrect username or password';
+	  sleep(3);
 	  header("Location: userlogin.php");
 	  exit();
 }

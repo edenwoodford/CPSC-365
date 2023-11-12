@@ -1,0 +1,119 @@
+Allowing User Entered Content Formatting:
+---------------------------
+1.) Use a blacklist of dangerous html tags and only filter those
+	-blacklists dont work (hackers are too creative with new tags)
+	
+2.) Use a whitelist of safe HTML tags, and filter everything but those
+	-works well enough
+
+3.) Define our own content formatting language
+	-our example use BBCode
+	-ex: [b] this is bold text[\b]
+	
+	-ex: if they click "enter" once, add a <br> tag
+	-ex: if they click "enter" twice, add a <p> tag
+	
+	-because of the different systems(windows, linux, mac), you need to check and replace the \n and \r 's
+	<?php
+	if(isset($_POST['content']))
+	{
+	$text = $_POST['content'];
+	$text = str_replace ("\r\n", "\n", $text);
+	$text = str_replace ("\r", "\n", $text);
+	
+	$text = '<p>'.$text;
+	$text = str_replace("\n\n", '</p><p>', $text);
+	$text = str_replace("\n", '<br/>', $text);
+	$text = preg_replace ('/\[b](.+)\[\/b\]/','<strong>$1</strong>', $text);
+	//change the [b] to whatever else you want to do
+	//allow this for the user's profile
+	$text = $text.'</p>';
+	//echo htmlentities($text).'</p>';
+	echo $text;
+	
+	}
+	?>
+	<form method="POST">
+	<input type="text" name="content"><br>
+	//look up how to use a html text area
+	<input type="submit">
+	</form>
+Regular Expressions:
+-------------------
+-Do pattern matching on strings
+-Test them via regex101.com
+-^ is the beginning of the line
+-$ is the end of the line
+-() 1 or more times
+
+
+SQL - Runs on the database 
+PHP- generates pages on the server
+Javascript- runs in the browser
+
+JQuery - Javascript library:
+---------------------
+1) Download the file and store it on your server
+
+2) Download the file from a CDN (Content Delivery Network)
+con- they can go down, but less reliable because they can go down
+search -> jquery cdn -> use those addresses in place of the server when loading in JQuery
+
+Note- Put it at the bottom of your body! (not in the head)
+Use Javascript to react to user action (when a user interacts, is something getting added, going away,
+is a button being used then you want to hide things?)
+
+<html>
+<head>
+	<title> My Page </title>
+</head>
+<body>
+<p class = "warning"> This is a pragraph </p>
+<p> This is another paragraph </p>
+<h1> Testing Javascript/JQuery </h1>
+<h2 id="jswarning"> This page requires javscript to function </h2>
+//use this warning that gets hidden if they have the support that they need
+<input type="button" id="headerButton" value="Toggle Heading">
+<div id="list of items">
+$('<p>A new paragraph</p>').insertAfter ('#listofitems:last');
+//gets the last item in the container
+</div>
+Testing Javascript/JQuery
+<script type="text/javascript" src="jquery-3.7.1.min.js"</script>
+<script type="text/javascript" src="mycode.js"</script>
+</body>
+</html>
+
+DOM (Document Object Model) of a Web Page
+----------------------------------
+-structure that makes it easy to find elements on a page
+id- unique identifier not duplicated by any other element on page
+class- elements on a page may belong to many classes
+
+execute code after everything has been loaded
+
+//"mycode.js"
+	$(document).ready(function ()
+	{
+	$('#heading').click (function ()
+	{
+	$(this).css('background-color','#FF0000');
+	});
+	$('#headerButton').click(function(
+	{
+	$('.heading').toggle ();
+	});
+	alert("Welcome to my page");
+	
+	
+	$('p') //rarely will want to do this
+	$('.warning') //select a class
+	$('warning').css('background-color','#red');
+});
+
+for friend requests, give all the buttons a class so you can toggle it on the database side
+
+	$(document).ready(function ()
+	{
+$(<input type= "text" name = "actor"[]">').insertAfter ('listofactors:last');
+});

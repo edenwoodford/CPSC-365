@@ -29,7 +29,7 @@ echo ' rating added! ';
 //find avg
 $averageRatings = "SELECT AVG(score) as avgScore FROM Ratings WHERE movie_id = :movie_id";
 $stmt = $pdo->prepare($averageRatings);
-$stmt->bindParam(':movie_id', $movie_id, PDO::PARAM_INT);
+$stmt->bindParam(':movie_id', $movie_id);
 $stmt->execute();
 $findRating = $stmt->fetch();
 $averageRating = $findRating['avgScore'];

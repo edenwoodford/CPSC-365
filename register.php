@@ -1,10 +1,10 @@
 <html
 <head>
+<div>
   <title>User Authentication</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="formatStyles.css">
 </head>
 <body>
-<div>
 <h1>User Registration</h1>
 <form action="doform.php" method="POST">
 		  <input type="hidden" name="hiddenvalue" value="foo">
@@ -21,9 +21,6 @@ Already have an account?
 <form action="index.php" method="post">
 	<input type="submit" value="Continue as Guest">
 	</form>
-	<form action="pictures.php" method="post">
-	<input type="submit" value="Practice pictures">
-</form>
 </div>
 </body>
 </html>
