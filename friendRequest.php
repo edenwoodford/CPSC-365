@@ -25,11 +25,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(2, $user1);
         $stmt->execute();
 
-        $pdo->commit();
-
-    } catch (PDOException $e) {
-        $pdo->rollback();
-
-    }
-} 
+    $pdo->commit();
+    echo json_encode(['success' => true]); 
+} catch (PDOException $e) {
+    $pdo->rollback();
+    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+}
+}
 ?>
