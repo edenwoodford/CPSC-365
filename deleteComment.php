@@ -7,6 +7,6 @@ $stmt= $pdo-> prepare($findComment);
 $stmt->bindParam('username', :username);
 $stmt->execute();
 if 
-
+//i will do this later
 
 ?>

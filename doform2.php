@@ -9,7 +9,6 @@ $stmt = $pdo->prepare($checkUsername);
 $stmt->bindParam(':username', $username);
 $stmt->execute();
 $user = $stmt->fetch(); 
-//??
 if (!$user) {
      echo 'User is not found';
 } 
@@ -18,8 +17,7 @@ else {
 	if (password_verify($password, $storedPassword)) {
 		session_regenerate_id(true);
 		$_SESSION['user_id'] = $user['user_id'];
-		$_SESSION['admin'] = $user['admin'];
-//admin???		
+		$_SESSION['admin'] = $user['admin'];	
 			echo 'Login Successful';
 			header("Location: index.php");
 			exit();
