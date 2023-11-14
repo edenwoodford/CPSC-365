@@ -1,21 +1,35 @@
+
+<html>
+<body>
+
 <?php
 session_start();
 require 'dbconnect.php';
 dbConnect();
-?>
-<html>
-<head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-<?php 
-require 'header.php'; 
-if (isset($_SESSION['user_id'])) {
+require 'header.php';
     $user_id = $_SESSION['user_id'];
-
-    $findRequest = "SELECT FriendList.friendList_id, Friends.user_id1, Friends.user_id2 
+	if (isset($_SESSION['user_id'])) {
+    $stmt = $pdo->prepare("SELECT username FROM Users WHERE user_id = ?");
+    $stmt->bindParam(1, $user_id);
+    $stmt->execute();
+    $user = $stmt->fetch();
+    if ($user) {
+        echo "<h1>Welcome to {$user['username']}'s page!</h1>";
+$file_path = "uploads/{$user_id}_profile.jpeg";
+if (file_exists($file_path)) {
+    echo "<img src='{$file_path}'/><br>";
+} else {
+    $file_path = "uploads/no_profile.jpg";
+    echo "<img src='{$file_path}'/><br>";
+}
+}
+?>
+<form action="profilePic.php" method= "POST" enctype="multipart/form-data">
+<input type="file" name="upload" accept= ".jpg">
+<input type="submit" value= "Update Profile Picture"> <br> 
+</form>
+<?php
+   $findRequest = "SELECT FriendList.friendList_id, Friends.user_id1, Friends.user_id2 
                     FROM FriendList 
                     JOIN Friends ON FriendList.friend_id = Friends.friend_id 
                     WHERE (Friends.user_id1 = ? OR Friends.user_id2 = ?) 
@@ -71,22 +85,29 @@ if (isset($_SESSION['user_id'])) {
 <script type="text/javascript" src="jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="friendResponse.js"></script>
 <?php
-$displayMovie = 'SELECT * FROM movies ORDER BY dateAdded DESC LIMIT 10';
-$stmt = $pdo->query($displayMovie);
-
-while ($showMovies = $stmt->fetch()) {
-    $movie_id = $showMovies['movie_id'];
-    $file_path = "uploads/{$movie_id}_thumb.jpeg";
-    if (file_exists($file_path)) {
-        echo "<img src='{$file_path}'/><br>";
-    } 		
-	$url = "moviePage.php?movie_id={$movie_id}";
-	$tag = "<h1> <a href='{$url}'>{$showMovies['title']}</a></h1>";
-	echo $tag;
-    echo "<p>{$showMovies['description']}<p>";
-    echo "<p>Directed By: {$showMovies['director']}<p>";
-	echo "<p>Year: {$showMovies['year']}</p><br>";
-}
+    $findRates= "SELECT Movies.title, Ratings.score FROM Ratings JOIN Movies ON Ratings.movie_id = Movies.movie_id WHERE Ratings.user_id = ? ORDER BY Ratings.rating_id DESC LIMIT 10";
+    $stmt = $pdo->prepare($findRates);
+    $stmt->bindParam(1, $user_id);
+    $stmt->execute();
+    $ratedMovies = $stmt->fetchAll();
+    echo "<h2>Recently Rated Movies:</h2>";
+    echo "<ul>";
+    foreach ($ratedMovies as $movie) {
+        echo "<li>" . ($movie['title']) . " - Rating: " . $movie['score'] . "</li>";
+    }
+    echo "</ul>";
+	$sql = "SELECT U.username FROM Users U JOIN FriendList FL ON (U.user_id = FL.user_id OR U.user_id = FL.friend_id)JOIN Friends F ON FL.friend_id = F.friend_id WHERE (F.user_id1 = :user_id OR F.user_id2 = :user_id) AND FL.accepted = 1 AND U.user_id != :user_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    $friends = $stmt->fetchAll();
+    echo "<h2>Friends:</h2>";
+    echo "<ul>";
+    foreach ($friends as $friend) {
+        echo "<li>" . ($friend['username']) . "</li>";
+    }
+    echo "</ul>";
 ?>
 </body>
 </html>
+

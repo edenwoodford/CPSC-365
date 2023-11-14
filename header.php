@@ -27,6 +27,9 @@
             echo '<form action="logout.php" method="POST">';
             echo '<input type="submit" value="Logout">';
             echo '</form>';
+			echo '<form action ="profile.php" method = "POST">';
+			echo '<input type = "submit" value ="Profile Page">';
+			echo '</form>';
         } 
 		else {
             echo '<form action="register.php" method="post">';

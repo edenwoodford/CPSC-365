@@ -8,6 +8,7 @@
 session_start();
 require 'dbconnect.php';
 dbConnect();
+
 require 'header.php';
 if (isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
