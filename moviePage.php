@@ -86,19 +86,19 @@ if (isset($_GET['movie_id'])) {
     echo htmlentities($comment['comment'], ENT_QUOTES) . " ";
 	echo "(posted on {$comment['date']})</p>";
 	if (isset($_SESSION ['user_id'])){
-    if (($_SESSION['user_id'] != $comment['user_id']))  {
-$sql = "SELECT COUNT(*) FROM FriendList 
-        JOIN Friends ON FriendList.friend_id = Friends.friend_id
-        WHERE ((Friends.user_id1 = :currentUser AND Friends.user_id2 = :otherUser) 
-        OR (Friends.user_id1 = :otherUser AND Friends.user_id2 = :currentUser))
-        AND FriendList.pending = 1";
-//this finds where the sender has already set a pending request to the receiver
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':currentUser', $_SESSION['user_id']);
-$stmt->bindParam(':otherUser', $comment['user_id']);
-$stmt->execute();
-$requestExists = $stmt->fetchColumn() > 0;
-        if (!$requestExists) {
+if ($_SESSION['user_id'] != $comment['user_id']) {
+    $sql = "SELECT COUNT(*) FROM FriendRequests 
+            WHERE ((requester_id = :currentUser AND addressee_id = :otherUser) 
+            OR (requester_id = :otherUser AND addressee_id = :currentUser))
+            AND pending = 1";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':currentUser', $_SESSION['user_id']);
+    $stmt->bindParam(':otherUser', $comment['user_id']);
+    $stmt->execute();
+    $requestExists = $stmt->fetchColumn() > 0;
+
+    if (!$requestExists) {
 			//and then doesnt display this form again
 	?>
 <form id="addFriendForm">

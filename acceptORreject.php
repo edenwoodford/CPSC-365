@@ -6,17 +6,17 @@ header('Content-Type: application/json');
 
 $response = ['success' => false];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['friendList_id'], $_POST['action'])) {
-    $friendListId = $_POST['friendList_id'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['request_id'], $_POST['action'])) {
+    $requestId = $_POST['request_id'];
     $action = $_POST['action'];
     $pdo->beginTransaction();
     try {
         if ($action == 'Accept') {
-            $stmt = $pdo->prepare("UPDATE FriendList SET pending = 0, accepted = 1 WHERE friendList_id = ?");
+            $stmt = $pdo->prepare("UPDATE FriendRequests SET pending = FALSE, accepted = TRUE WHERE request_id = ?");
         } else {
-            $stmt = $pdo->prepare("UPDATE FriendList SET pending = 0, denied = 1 WHERE friendList_id = ?");
+            $stmt = $pdo->prepare("UPDATE FriendRequests SET pending = FALSE, denied = TRUE WHERE request_id = ?");
         }
-		$stmt -> bindParam(1, $friendListId);
+        $stmt->bindParam(1, $requestId, PDO::PARAM_INT);
         $stmt->execute();
         $pdo->commit();
         $response['success'] = true;
@@ -30,5 +30,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['friendList_id'], $_POS
 
 echo json_encode($response);
 ?>
-
-        

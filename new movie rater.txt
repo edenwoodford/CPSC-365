@@ -1,0 +1,116 @@
+CREATE DATABASE movie_rater;  
+USE movie_rater;  
+CREATE TABLE Users (  
+user_id int NOT NULL AUTO_INCREMENT,  
+username VARCHAR(255) NOT NULL UNIQUE,  
+password VARCHAR(255) NOT NULL,  
+admin boolean,  
+PRIMARY KEY (user_id)  
+)engine=InnoDB;  
+  
+CREATE TABLE FriendRequests (
+request_id int NOT NULL AUTO_INCREMENT,
+requester_id int NOT NULL,
+addressee_id int NOT NULL,
+pending boolean DEFAULT TRUE,
+accepted boolean DEFAULT FALSE,
+denied boolean DEFAULT FALSE,
+PRIMARY KEY (request_id),
+FOREIGN KEY (requester_id) REFERENCES Users(user_id),
+FOREIGN KEY (addressee_id) REFERENCES Users(user_id)
+) engine=InnoDB;
+
+CREATE TABLE Genres (  
+genre_id int NOT NULL AUTO_INCREMENT,  
+genre VARCHAR(255) NOT NULL UNIQUE,  
+PRIMARY KEY (genre_id)  
+)engine=InnoDB; 
+
+CREATE TABLE Movies (  
+movie_id int NOT NULL AUTO_INCREMENT,  
+title VARCHAR(255) NOT NULL, 
+description text,  
+year VARCHAR(255),  
+upload VARCHAR(255), 
+director VARCHAR(255) NOT NULL, 
+dateAdded datetime,  
+PRIMARY KEY (movie_id)  
+)engine=InnoDB;  
+
+CREATE TABLE MovieGenres (  
+movie_id int NOT NULL,  
+genre_id int NOT NULL,  
+FOREIGN KEY (movie_id) REFERENCES Movies(movie_id) ON DELETE CASCADE,  
+FOREIGN KEY (genre_id) REFERENCES Genres(genre_id),  
+PRIMARY KEY (movie_id, genre_id)  
+)engine=InnoDB;  
+  
+CREATE TABLE Directors ( 
+director_id int NOT NULL AUTO_INCREMENT, 
+name VARCHAR(255),
+PRIMARY KEY (director_id) 
+)engine=InnoDB; 
+  
+CREATE TABLE SharedDirectors ( 
+sharedDirector_id int AUTO_INCREMENT,  
+movie_id int,  
+director_id int, 
+FOREIGN KEY (movie_id) REFERENCES Movies(movie_id) ON DELETE CASCADE, 
+FOREIGN KEY (director_id) REFERENCES Directors(director_id), 
+PRIMARY KEY (sharedDirector_id) 
+)engine=InnoDB; 
+  
+CREATE TABLE Actors (  
+actor_id int NOT NULL AUTO_INCREMENT,  
+name VARCHAR(255) NOT NULL unique,  
+PRIMARY KEY (actor_id)  
+)engine=InnoDB;  
+  
+CREATE TABLE SharedMovies (   
+movie_id int,   
+actor_id int,  
+FOREIGN KEY (movie_id) REFERENCES Movies(movie_id) ON DELETE CASCADE,  
+PRIMARY KEY (movie_id, actor_id)  
+)engine=InnoDB;  
+
+CREATE TABLE Ratings (  
+rating_id int NOT NULL AUTO_INCREMENT,  
+score int,  
+user_id int,  
+movie_id int,  
+FOREIGN KEY (user_id) REFERENCES Users(user_id),  
+FOREIGN KEY (movie_id) REFERENCES Movies(movie_id) ON DELETE CASCADE,  
+PRIMARY KEY (rating_id)  
+)engine=InnoDB;  
+
+CREATE TABLE Comments (  
+comment_id int NOT NULL AUTO_INCREMENT,  
+comment VARCHAR(255) NOT NULL,  
+movie_id int,   
+user_id int,   
+date datetime, 
+FOREIGN KEY (movie_id) REFERENCES Movies(movie_id) ON DELETE CASCADE,
+FOREIGN KEY (user_id) REFERENCES Users(user_id),  
+PRIMARY KEY (comment_id)  
+)engine=InnoDB;  
+   
+SHOW TABLES;  
+ 
+INSERT INTO Genres (genre) VALUES ('Action'); 
+INSERT INTO Genres (genre) VALUES ('Comedy'); 
+INSERT INTO Genres (genre) VALUES ('Drama'); 
+INSERT INTO Genres (genre) VALUES ('Romance'); 
+INSERT INTO Genres (genre) VALUES ('True Crime'); 
+INSERT INTO Genres (genre) VALUES ('Sitcom'); 
+INSERT INTO Genres (genre) VALUES ('Sci-Fi'); 
+INSERT INTO Genres (genre) VALUES ('Horror'); 
+INSERT INTO Genres (genre) VALUES ('Mystery'); 
+INSERT INTO Genres (genre) VALUES ('Western'); 
+INSERT INTO Genres (genre) VALUES ('Documentary'); 
+INSERT INTO Genres (genre) VALUES ('Animation');   
+INSERT INTO Genres (genre) VALUES ('Fantasy');   
+INSERT INTO Genres (genre) VALUES ('Historical');  
+INSERT INTO Genres (genre) VALUES ('Musical');   
+INSERT INTO Genres (genre) VALUES ('War');   
+INSERT INTO Genres (genre) VALUES ('Adventure');  
+INSERT INTO Genres (genre) VALUES ('Family'); 
