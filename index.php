@@ -12,8 +12,6 @@ dbConnect();
 
 <?php 
 require 'header.php'; 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
 
 $displayMovie = 'SELECT * FROM Movies ORDER BY dateAdded DESC LIMIT 10';
 $stmt = $pdo->query($displayMovie);
@@ -31,7 +29,7 @@ while ($showMovies = $stmt->fetch()) {
     echo "<p>Directed By: {$showMovies['director']}<p>";
 	echo "<p>Year: {$showMovies['year']}</p><br>";
 }
-}
+
 ?>
 </body>
 </html>

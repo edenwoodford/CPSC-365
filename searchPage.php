@@ -1,8 +1,9 @@
 <?php
+session_start();
 require 'dbconnect.php';
 dbConnect();
 require 'header.php';
-session_start();
+
 
 if (isset($_GET['title'])) {
     $title = $_GET['title'];

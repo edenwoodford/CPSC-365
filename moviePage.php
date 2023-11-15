@@ -88,26 +88,20 @@ if (isset($_GET['movie_id'])) {
 	if (isset($_SESSION ['user_id'])){
 if ($_SESSION['user_id'] != $comment['user_id']) {
     $sql = "SELECT COUNT(*) FROM FriendRequests 
-            WHERE ((requester_id = :currentUser AND addressee_id = :otherUser) 
-            OR (requester_id = :otherUser AND addressee_id = :currentUser))
+            WHERE requester_id = :currentUser AND addressee_id = :otherUser
             AND pending = 1";
-
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':currentUser', $_SESSION['user_id']);
     $stmt->bindParam(':otherUser', $comment['user_id']);
     $stmt->execute();
     $requestExists = $stmt->fetchColumn() > 0;
-
     if (!$requestExists) {
-			//and then doesnt display this form again
 	?>
 <form id="addFriendForm">
 <input type="button" id="addFriendButton" value="Add Friend" 
         data-friend1="<?php echo $_SESSION['user_id']; ?>" 
         data-friend2="<?php echo $comment['user_id']; ?>" />
 </form>
-<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="friendJS.js"></script>
 
 	<?php
 	  }
@@ -162,6 +156,8 @@ if ($_SESSION['user_id'] != $comment['user_id']) {
 ?>
 </div>
 </div>
+<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="friendJS.js"></script>
 </body>
 
 </html>

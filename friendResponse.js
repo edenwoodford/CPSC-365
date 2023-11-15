@@ -17,13 +17,7 @@ $(document).ready(function() {
                 } else {
                     alert('Something went wrong');
 				}
-       },
-error: function(xhr, status, error) {
-    console.log("Error response: " + xhr.responseText);
-    alert('Error: ' + xhr.responseText);
-}
-
-
+			}
         });
     });
 });

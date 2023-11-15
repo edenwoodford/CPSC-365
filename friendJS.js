@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $('#addFriendButton').click(function () {
+		$('#addFriendButton').hide();
         var user1 = $(this).data('friend1');
         var user2 = $(this).data('friend2');
         $.post("friendRequest.php", { friend1: user1, friend2: user2 })
@@ -17,3 +18,4 @@ $(document).ready(function () {
         });
     });
 });
+

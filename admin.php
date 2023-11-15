@@ -1,5 +1,6 @@
-    <link rel="stylesheet" href="formatStyles.css">
+
 <?php
+// <link rel="stylesheet" href="formatStyles.css">
 session_start();
 REQUIRE 'dbconnect.php';
 dbConnect();

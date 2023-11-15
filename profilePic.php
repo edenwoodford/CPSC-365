@@ -32,10 +32,10 @@ if (isset($_FILES['upload'])) {
 	$targetWidth = 150;
 	$targetHeight = floor ($height * ($targetWidth/$width));
 	
-	$thumbnail = imagecreatetruecolor ($targetWidth, $targetHeight);
+	$profilePic = imagecreatetruecolor ($targetWidth, $targetHeight);
 	imagecopyresampled ($thumbnail, $image, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
 	$profilePicName = $upload_dir . $user_id . "_profile.jpeg";
-	imagejpeg ($thumbnail, $profilePicName);
+	imagejpeg ($profilePic, $profilePicName);
 	header("Location: profile.php");
     }
 }
