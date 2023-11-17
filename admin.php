@@ -24,7 +24,7 @@ Note: all fields are required except actor names and extra genres <br> <br>
 <label for="title">Movie Title:<br></label>
 <input type="text" name="title" required><br>    
 <label for="description">Description:<br></label>
-<textarea name="description" required></textarea><br>        
+<textarea rows='4' cols='50' name="description" required></textarea><br>        
 <label for="year">Release Year:<br></label>
 <input type="text" name="year" required><br>
  <br> Movie Poster: <br>
@@ -110,15 +110,6 @@ Note: all fields are required except actor names and extra genres <br> <br>
 <label for="title"> Movie Title: <br></label>
 <input type="text" name="title" required><br>
 <input type='submit' value= 'Delete Movie'>
-</form>
-<form action="deleteComment.php" method ="POST">
-<h2>Delete Comment</h2> <br>
-Fill in The Following Information: <br><br>
-<label for = "title"> Movie Title <br> </label>
-<input type ="text" name= "title" required><br>
-<label for "username"> Username <br> </label>
-<input type ="text" name ="username" required> <br> 
-<input type ="submit" value ="Find Comments ">
 </form>
 </html>
 

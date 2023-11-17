@@ -7,23 +7,37 @@ session_start();
 require 'dbconnect.php';
 dbConnect();
 require 'header.php';
+if (isset($_GET['user_id']) && $_GET['user_id'] != $_SESSION['user_id']) {
+    $user_id = $_GET['user_id'];
+} else {
     $user_id = $_SESSION['user_id'];
-	if (isset($_SESSION['user_id'])) {
-    $stmt = $pdo->prepare("SELECT username FROM Users WHERE user_id = ?");
+}
+	$usernameBio = "SELECT username, bio FROM Users WHERE user_id = ?";
+    $stmt = $pdo->prepare($usernameBio);
     $stmt->bindParam(1, $user_id);
     $stmt->execute();
     $user = $stmt->fetch();
 echo '<div class="profile-container">';
     if ($user) {
     echo "<h1>Welcome to {$user['username']}'s page!</h1>";
+echo '<div class="profile-picture">';
 $file_path = "uploads/{$user_id}_profile.jpeg";
 if (file_exists($file_path)) {
     echo "<img src='{$file_path}'/><br>";
 } else {
     $file_path = "uploads/no_profile.jpg";
     echo "<img src='{$file_path}'/><br>";
-
 }
+echo '</div>';
+if (!empty($user['bio'])) {
+     echo "<form action='bio.php' method='post'>";
+     echo "<textarea name='bio' rows='4' cols='30'>{$user['bio']}</textarea><br>";
+     echo "<input type='submit' value='Update Bio'>";
+     echo "</form>";
+} else {
+     echo "<p>This user has not written a bio yet.</p>";
+}
+
 }echo '<div class="friends-list">';
 $sql = "SELECT u.username FROM Users u JOIN FriendRequests fr ON fr.accepted = true AND (fr.requester_id = :user_id OR fr.addressee_id = :user_id) WHERE (u.user_id = fr.requester_id OR u.user_id = fr.addressee_id) AND u.user_id != :user_id";
 $stmt = $pdo->prepare($sql);
@@ -38,12 +52,14 @@ foreach ($friends as $friend) {
 echo "</ul>";
 echo "</div>";
 echo '</div>';
+if ($user_id == $_SESSION['user_id']) {
 ?>
 <form action="profilePic.php" method= "POST" enctype="multipart/form-data">
 <input type="file" name="upload" accept= ".jpg">
 <input type="submit" value= "Update Profile Picture"> <br> 
 </form>
 <?php
+}
     $findRequest = "SELECT request_id, requester_id, addressee_id 
                     FROM FriendRequests 
                     WHERE (requester_id = ? OR addressee_id = ?) 
@@ -69,12 +85,10 @@ echo '</div>';
         echo "</form>";
 		echo '</div>';
     }
-}
 
 echo '<div class="activity-container">';
 echo '<div class="recent-comments">';
 if ($_SESSION['user_id']) {
-    $user_id = $_SESSION['user_id'];
     $fetchComments = "SELECT Comments.*, Users.username, Movies.title FROM Comments 
                       JOIN Users ON Comments.user_id = Users.user_id
                       JOIN Movies ON Comments.movie_id = Movies.movie_id
@@ -85,7 +99,7 @@ if ($_SESSION['user_id']) {
     $stmt->execute();
     $comments = $stmt->fetchAll();
 
-    echo '<h2>Your Recent Comments</h2>';
+    echo '<h2>Your Recent Comments: </h2>';
     foreach ($comments as $comment) {
         echo "<div class='comments'>";
         echo htmlentities($comment['username']) . " commented on " . htmlentities($comment['title']) . "";
@@ -96,7 +110,8 @@ if ($_SESSION['user_id']) {
 }
 
 echo '<div class="recent-ratings">';
-    $findRates= "SELECT Movies.title, Ratings.score FROM Ratings JOIN Movies ON Ratings.movie_id = Movies.movie_id WHERE Ratings.user_id = ? ORDER BY Ratings.rating_id DESC LIMIT 10";
+
+    $findRates = "SELECT Movies.title, Ratings.score FROM Ratings JOIN Movies ON Ratings.movie_id = Movies.movie_id WHERE Ratings.user_id = ? ORDER BY Ratings.rating_id DESC LIMIT 10";
     $stmt = $pdo->prepare($findRates);
     $stmt->bindParam(1, $user_id);
     $stmt->execute();

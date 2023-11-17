@@ -29,11 +29,11 @@ if (isset($_FILES['upload'])) {
 	$image = imagecreatefromjpeg ($filename);
 	$width = imagesx ($image);
 	$height = imagesy ($image);
-	$targetWidth = 150;
+	$targetWidth = 200;
 	$targetHeight = floor ($height * ($targetWidth/$width));
 	
 	$profilePic = imagecreatetruecolor ($targetWidth, $targetHeight);
-	imagecopyresampled ($thumbnail, $image, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
+	imagecopyresampled ($profilePic, $image, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
 	$profilePicName = $upload_dir . $user_id . "_profile.jpeg";
 	imagejpeg ($profilePic, $profilePicName);
 	header("Location: profile.php");

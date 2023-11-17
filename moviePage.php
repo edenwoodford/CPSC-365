@@ -102,13 +102,20 @@ if ($_SESSION['user_id'] != $comment['user_id']) {
         data-friend1="<?php echo $_SESSION['user_id']; ?>" 
         data-friend2="<?php echo $comment['user_id']; ?>" />
 </form>
-
-	<?php
+<?php
 	  }
+	}
+if ($_SESSION['user_id'] == $comment['user_id']) {
+	  ?>
+<form action="deleteComment.php" method="post">
+    <input type="hidden" name="comment_id" value="<?php echo $commentId; ?>">
+    <input type="submit" value="Delete Comment">
+</form>
+
+<?php
 	}
   }
 }
-//ex: echo '<b> Latest Comment: </b>''.htmlentities($_POST['comment'],ENT_QUOTES).'<br>;
     if (isset($_SESSION['user_id'])) {
         echo '<form action="" method="post">';
         echo '<textarea name="comment" required></textarea><br>';
