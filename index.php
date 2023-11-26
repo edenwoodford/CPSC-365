@@ -6,7 +6,7 @@ dbConnect();
 <html>
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="movieStyles.css">
 </head>
 <body>
 
@@ -17,6 +17,7 @@ $displayMovie = 'SELECT * FROM Movies ORDER BY dateAdded DESC LIMIT 10';
 $stmt = $pdo->query($displayMovie);
 
 while ($showMovies = $stmt->fetch()) {
+	echo "<div class='movie-info'>";
     $movie_id = $showMovies['movie_id'];
     $file_path = "uploads/{$movie_id}_thumb.jpeg";
     if (file_exists($file_path)) {
@@ -24,10 +25,25 @@ while ($showMovies = $stmt->fetch()) {
     } 		
 	$url = "moviePage.php?movie_id={$movie_id}";
 	$tag = "<h1> <a href='{$url}'>{$showMovies['title']}</a></h1>";
-	echo $tag;
-    echo "<p>{$showMovies['description']}<p>";
-    echo "<p>Directed By: {$showMovies['director']}<p>";
-	echo "<p>Year: {$showMovies['year']}</p><br>";
+    echo $tag;
+    echo "<p>{$showMovies['description']}</p>";
+    echo "<p>Year: {$showMovies['year']}</p>";
+    $directors = 'SELECT Directors.name FROM Directors JOIN SharedDirectors ON Directors.director_id = SharedDirectors.director_id WHERE SharedDirectors.movie_id = :movie_id';
+    $stmt2 = $pdo->prepare($directors);
+    $stmt2->bindParam(':movie_id', $movie_id);
+    $stmt2->execute();
+    
+    echo "<p>Directed By: ";
+$firstDirector = true;
+    while ($director = $stmt2->fetch()) {
+        if (!$firstDirector) {
+            echo ', ';
+        }
+        echo $director['name'];
+        $firstDirector = false;
+    }
+    echo "</p>";
+    echo "</div>";
 }
 
 ?>

@@ -1,6 +1,8 @@
-
+<html>
+<head> 
+<title> Admin Page </title> </head>
+<body>
 <?php
-// <link rel="stylesheet" href="formatStyles.css">
 session_start();
 REQUIRE 'dbconnect.php';
 dbConnect();
@@ -18,8 +20,8 @@ if (!isset($_SESSION['admin'])) {
 <title> Administrator Page</title> 
 </head> 
 <h1> Administrator Page</h1> 
-Add a new movie here! <br>
-Note: all fields are required except actor names and extra genres <br> <br> 
+<h2>Add a new movie here! </h2>
+<br>
 <form action="doadmin.php" method= "POST" enctype="multipart/form-data">
 <label for="title">Movie Title:<br></label>
 <input type="text" name="title" required><br>    
@@ -95,8 +97,12 @@ Note: all fields are required except actor names and extra genres <br> <br>
   <option value="17">Adventure</option>
   <option value="18">Family</option>
 </select><br>
-<label for="director">Director:<br></label>
-<input type="text" name="director" required><br> 
+Director: <br>
+<label for="director"></label>
+<input type="button" class="addDirectorBtn" value="Add Director">
+<div class="directorContainer"><p><input type="text" name="director[]"></p>
+</div>
+Actors: <br>
 <input type="button" id="addActorB" value="Add Actor">
 <p id="addActor"> <input type ="text" name="actor[]"> </p>
      
@@ -104,6 +110,7 @@ Note: all fields are required except actor names and extra genres <br> <br>
 </form>
 <script type="text/javascript" src="jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="adminJs.js"></script>
+<script type="text/javascript" src="director.js"></script>
 </body>
 <form action="deleteMovie.php" method ='POST'>
 <h2>Delete Movie</h2>

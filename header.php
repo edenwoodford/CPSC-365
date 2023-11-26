@@ -22,13 +22,15 @@
             echo '<input type="submit" value="Admin Page">';
             echo '</form>';
         }
-
         if (isset($_SESSION['user_id'])) {
             echo '<form action="logout.php" method="POST">';
             echo '<input type="submit" value="Logout">';
             echo '</form>';
 			echo '<form action ="profile.php" method = "POST">';
 			echo '<input type = "submit" value ="Profile Page">';
+			echo '</form>';
+			echo '<form action="recommend.php" method="POST">';
+			echo '<input type="submit" value="Recommendation">';
 			echo '</form>';
         } 
 		else {

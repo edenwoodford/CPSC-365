@@ -1,0 +1,36 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+nav a:hover {
+    background-color: #555;
+}
+h1 {
+    color: #333;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.movie-info {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.movie-info p {
+    margin: 10px 0;
+}

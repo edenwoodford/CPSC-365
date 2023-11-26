@@ -6,7 +6,9 @@
 </head>
 <body>
 <h1>User Registration</h1>
+
 <form action="doform.php" method="POST">
+Please note usernames and passwords must <br> be 5 and 8 characters long, respectively. <br>
 		  <input type="hidden" name="hiddenvalue" value="foo">
 Username: <input type="text" name="username"><br>
 Password: <input type="password" name= "password"> <br> 

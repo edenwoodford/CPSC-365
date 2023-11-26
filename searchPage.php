@@ -1,3 +1,8 @@
+<html>
+<head> <title> Search Results </title>
+<link rel="stylesheet" href="movieStyles.css"> </head>
+<body>
+
 <?php
 session_start();
 require 'dbconnect.php';
@@ -20,6 +25,7 @@ if (isset($_GET['title'])) {
     $users = $stmt->fetchAll();
 
     foreach ($movies as $movie) {
+        echo "<div class='movie-info'>";		
         $movie_id = $movie['movie_id'];
         $file_path = "uploads/{$movie_id}_thumb.jpeg";
         if (file_exists($file_path)) {
@@ -27,8 +33,23 @@ if (isset($_GET['title'])) {
         }
         $url = "moviePage.php?movie_id={$movie_id}";
         echo "<h1> <a href='{$url}'>{$movie['title']}</a></h1>";
-        echo "<br><p>{$movie['description']}</p>";
-        echo "<p>Directed By: {$movie['director']}</p><br>";
+		echo "<p>{$movie['description']}</p>";
+	$directors = 'SELECT Directors.name FROM Directors JOIN SharedDirectors ON Directors.director_id = SharedDirectors.director_id WHERE SharedDirectors.movie_id = :movie_id';
+    $stmt = $pdo->prepare($directors);
+    $stmt->bindParam(':movie_id', $movie_id);
+    $stmt->execute();
+    echo "<p>Directed By: ";
+	$firstDirector = true;
+    while ($director = $stmt->fetch()) {
+        if (!$firstDirector) {
+            echo ', ';
+        }
+        echo $director['name'];
+        $firstDirector = false;
+    }
+    echo "</p>";
+		echo "<p>Year: {$movie['year']}</p>";
+		echo "</div>";
     }
 
     foreach ($users as $user) {
@@ -41,3 +62,5 @@ else {
 	header("Location: index.php");
 }
 ?>
+</body>
+</html>

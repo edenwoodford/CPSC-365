@@ -17,18 +17,36 @@ if ($checkMovies) {
 	exit();
 }
 else {
-	$addMovie = 'INSERT INTO Movies (title, description, year, director) VALUES (:title, :description, :year, :director)';
-	$stmt = $pdo->prepare($addMovie);
-	$title = $_POST['title'];
-	$description = $_POST['description'];
-	$year= $_POST['year'];
-	$director = $_POST['director'];
-    $stmt->bindParam(':title', $title);
-    $stmt->bindParam(':description', $description );
-    $stmt->bindParam(':year', $year);
-    $stmt->bindParam(':director',$director);
-    $stmt->execute();
-    $movie_id = $pdo->lastInsertId();
+$addMovie = 'INSERT INTO Movies (title, description, year, director) VALUES (:title, :description, :year, :director)';
+$stmt = $pdo->prepare($addMovie);
+$title = $_POST['title'];
+$description = $_POST['description'];
+$year = $_POST['year'];
+$director = '';
+$stmt->bindParam(':title', $title);
+$stmt->bindParam(':description', $description);
+$stmt->bindParam(':year', $year);
+$stmt->bindParam(':director', $director);
+$stmt->execute();
+$movie_id = $pdo->lastInsertId();
+
+
+ if (isset($_POST['director'])) {
+    foreach ($_POST['director'] as $directorName) {
+        if (!empty($directorName)) {
+            $addDirector = 'INSERT INTO Directors (name) VALUES (:name)';
+            $stmt = $pdo->prepare($addDirector);
+            $stmt->bindParam(':name', $directorName);
+            $stmt->execute();
+            $director_id = $pdo->lastInsertId();
+            $addToMovie = 'INSERT INTO SharedDirectors (movie_id, director_id) VALUES (:movie_id, :director_id)';
+            $stmt = $pdo->prepare($addToMovie);
+            $stmt->bindParam(':movie_id', $movie_id);
+            $stmt->bindParam(':director_id', $director_id);
+            $stmt->execute();
+         }
+    }
+}
 
 if (isset($_FILES['upload'])) {
 	//var_dump($_FILES['upload']);

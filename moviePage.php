@@ -55,10 +55,33 @@ if (isset($_GET['movie_id'])) {
 		foreach ($actors as $actor) {
 		echo "{$actor['name']}, ";
 		}
-        echo "<p>Directed by: {$findMovie['director']}</p>";
-        echo '</div>';
-		}
+ $directors= 'SELECT Directors.name FROM Directors JOIN SharedDirectors ON Directors.director_id = SharedDirectors.director_id WHERE SharedDirectors.movie_id = :movie_id';
+    $stmt = $pdo->prepare($directors);
+    $stmt->bindParam(':movie_id', $movie_id);
+    $stmt->execute();
+    echo "<p>Directed By: ";
+    $firstDirector = true;
+    while ($director = $stmt->fetch()) {
+        if (!$firstDirector) {
+            echo ', ';
+        }
+        echo $director['name'];
+        $firstDirector = false;
+    }
+    echo "</p>";
+	$findAvg = "SELECT AVG(score) AS average_rating FROM Ratings WHERE movie_id = :movie_id";
+	$average = $pdo->prepare($findAvg);    
+    $average->bindParam(':movie_id', $movie_id);
+	$average->execute();
+	$average = $average->fetchColumn();
+if ($average !== null) {
+    echo "<p>Average Rating: " . number_format($average, 1) . "</p>";
+} else {
+    echo "<p>No ratings yet.</p>";
+}	
+    echo '</div>';
 	}
+}
 	?>
 	 <div class="container">
      <div class="comments">
@@ -71,7 +94,7 @@ if (isset($_GET['movie_id'])) {
      $stmt->bindParam(':user_id', $user_id);
      $stmt->bindParam(':comment', $comment);
      $stmt->execute();
-	header("Location: ?movie_id=$movie_id");
+	 header("Location: ?movie_id=$movie_id");
      exit();
     }
 	$findComments = "SELECT Users.username, Comments.comment, Comments.date, Comments.user_id FROM Comments

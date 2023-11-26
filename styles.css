@@ -1,19 +1,28 @@
-
 .header img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
 }
 .header {
-  width: 90%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  background-color: #E4FFFF;
+  gap: 100px;
+  background-color: #D8F9FF;
 }
-input[type="submit"].nostyle {
-  all: unset;
+input[type="submit"] {
   cursor: pointer;
+  background-color: #14b5d0;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+}
+input[type="text"] {
+    padding: 8px 15px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
 }
         .container {
             display: flex;
@@ -64,7 +73,3 @@ input[type="submit"].nostyle {
 		flex-wrap: wrap;
         gap: 20px;
 	}
-
-
-
-

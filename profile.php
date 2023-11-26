@@ -1,7 +1,9 @@
 
 <html>
+<head> <title> Profile </title> </head>
 <body>
     <link rel="stylesheet" href="styles.css">
+	
 <?php
 session_start();
 require 'dbconnect.php';
@@ -29,14 +31,29 @@ if (file_exists($file_path)) {
     echo "<img src='{$file_path}'/><br>";
 }
 echo '</div>';
+echo '<div class= "bio">';
+
 if (!empty($user['bio'])) {
-     echo "<form action='bio.php' method='post'>";
-     echo "<textarea name='bio' rows='4' cols='30'>{$user['bio']}</textarea><br>";
-     echo "<input type='submit' value='Update Bio'>";
-     echo "</form>";
+    if ($user_id == $_SESSION['user_id']) {
+        echo "<form action='bio.php' method='post'>";
+        echo "<textarea name='bio' rows='4' cols='30'>{$user['bio']}</textarea><br>";
+        echo "<input type='submit' value='Update Bio'>";
+        echo "</form>";
+    } else {
+        echo "<p>{$user['bio']}</p>";
+    }
 } else {
-     echo "<p>This user has not written a bio yet.</p>";
+    if ($user_id == $_SESSION['user_id']) {
+        echo "<form action='bio.php' method='post'>";
+        echo "<textarea name='bio' rows='4' cols='30'></textarea><br>";
+        echo "<input type='submit' value='Add Bio'>";
+        echo "</form>";
+    } else {
+        echo "<p>This user has not written a bio yet.</p>";
+    }
 }
+
+echo '</div>';
 
 }echo '<div class="friends-list">';
 $sql = "SELECT u.username FROM Users u JOIN FriendRequests fr ON fr.accepted = true AND (fr.requester_id = :user_id OR fr.addressee_id = :user_id) WHERE (u.user_id = fr.requester_id OR u.user_id = fr.addressee_id) AND u.user_id != :user_id";
@@ -59,6 +76,7 @@ if ($user_id == $_SESSION['user_id']) {
 <input type="submit" value= "Update Profile Picture"> <br> 
 </form>
 <?php
+	echo "<h2>Friend Requests:</h2> ";
 }
     $findRequest = "SELECT request_id, requester_id, addressee_id 
                     FROM FriendRequests 
@@ -99,7 +117,7 @@ if ($_SESSION['user_id']) {
     $stmt->execute();
     $comments = $stmt->fetchAll();
 
-    echo '<h2>Your Recent Comments: </h2>';
+    echo '<h2>Recent Comments: </h2>';
     foreach ($comments as $comment) {
         echo "<div class='comments'>";
         echo htmlentities($comment['username']) . " commented on " . htmlentities($comment['title']) . "";
