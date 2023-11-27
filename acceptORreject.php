@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['request_id'], $_POST['
         } else {
             $stmt = $pdo->prepare("UPDATE FriendRequests SET pending = FALSE, denied = TRUE WHERE request_id = ?");
         }
-        $stmt->bindParam(1, $requestId, PDO::PARAM_INT);
+        $stmt->bindParam(1, $requestId);
         $stmt->execute();
         $pdo->commit();
         $response['success'] = true;

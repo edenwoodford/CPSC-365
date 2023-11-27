@@ -17,6 +17,7 @@ $displayMovie = 'SELECT * FROM Movies ORDER BY dateAdded DESC LIMIT 10';
 $stmt = $pdo->query($displayMovie);
 
 while ($showMovies = $stmt->fetch()) {
+	echo '<ul>';
 	echo "<div class='movie-info'>";
     $movie_id = $showMovies['movie_id'];
     $file_path = "uploads/{$movie_id}_thumb.jpeg";
@@ -43,6 +44,7 @@ $firstDirector = true;
         $firstDirector = false;
     }
     echo "</p>";
+	echo '</ul>';
     echo "</div>";
 }
 

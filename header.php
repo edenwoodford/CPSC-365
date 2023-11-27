@@ -6,7 +6,7 @@
 <div class="header">
 
     <?php
-	//file path "C:\Users\edenw\OneDrive\Desktop\UniServerZ\www\images\film&friends.png"
+
 	    $imageName = "film&friends.png";
 	    $imagePath = "uploads/" . $imageName;
 		echo "<img src='" . $imagePath . "'>";
@@ -14,7 +14,7 @@
         echo '<input type="submit" value="Go Home">';
         echo '</form>';
 		echo '<form action="searchPage.php" method="get">';
-		echo '<input name ="title" type= "text" placeholder= "type here">';
+		echo '<input name ="title" type= "text" placeholder= "search here">';
 		echo '<input type="submit" value="Search">';
 		echo '</form>';
         if(isset($_SESSION['admin'])) {

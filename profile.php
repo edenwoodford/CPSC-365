@@ -108,7 +108,7 @@ echo '<div class="activity-container">';
 echo '<div class="recent-comments">';
 if ($_SESSION['user_id']) {
     $fetchComments = "SELECT Comments.*, Users.username, Movies.title FROM Comments 
-                      JOIN Users ON Comments.user_id = Users.user_id
+					  JOIN Users ON Comments.user_id = Users.user_id
                       JOIN Movies ON Comments.movie_id = Movies.movie_id
                       WHERE Comments.user_id = ?
                       ORDER BY Comments.date DESC LIMIT 10";

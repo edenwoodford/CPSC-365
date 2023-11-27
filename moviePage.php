@@ -31,7 +31,7 @@ if (isset($_GET['movie_id'])) {
 	$stmt -> execute();
 	$actors = $stmt-> fetchAll();
 	if ($findMovie) {
-        echo "<h2>{$findMovie['title']}</h2>";
+        echo "<h1>{$findMovie['title']}</h1>";
 		$movie_id = $findMovie['movie_id'];
 		$file_path = "uploads/{$movie_id}_thumb.jpeg";
 		if (file_exists($file_path)) {
